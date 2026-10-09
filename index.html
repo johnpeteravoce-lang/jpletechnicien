@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JP Technologie – Boutique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1b3d;
+    --ink-soft:#4a5676;
+    --paper:#f2f5fb;
+    --card:#ffffff;
+    --accent:#2d5bff;
+    --accent-dark:#1f43d1;
+    --mint:#12c29b;
+    --line:#e1e7f3;
+    --radius:20px;
+    --display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+    --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.55;
+    min-height:100vh;
+  }
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+
+  /* ---------- En-tête ---------- */
+  header{
+    background:var(--ink);
+    color:#fff;
+    padding:clamp(28px,5vw,56px) clamp(18px,5vw,64px) clamp(56px,7vw,92px);
+    position:relative;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;
+    right:-80px;top:-80px;
+    width:320px;height:320px;
+    border-radius:50%;
+    border:46px solid var(--accent);
+    opacity:.9;
+  }
+  header::before{
+    content:"";
+    position:absolute;
+    right:150px;bottom:-60px;
+    width:130px;height:130px;
+    border-radius:50%;
+    background:var(--mint);
+  }
+  .header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .brand{
+    font-family:var(--display);
+    font-weight:800;
+    font-size:clamp(2.2rem,6vw,4rem);
+    letter-spacing:-.03em;
+    line-height:1;
+  }
+  .tagline{margin-top:12px;color:#b9c4e3;font-size:1.05rem;max-width:36ch}
+  .phones{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .phones a{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.22);
+    padding:11px 18px;border-radius:999px;
+    text-decoration:none;font-weight:500;
+    backdrop-filter:blur(4px);
+    transition:background .2s;
+  }
+  .phones a:hover{background:rgba(255,255,255,.2)}
+  .phones svg{width:18px;height:18px;flex:none}
+
+  /* ---------- Tableau ---------- */
+  main{max-width:1100px;margin:-40px auto 0;padding:0 clamp(14px,4vw,32px) 60px;position:relative;z-index:2}
+  .section-title{
+    font-family:var(--display);
+    font-size:1.5rem;font-weight:700;
+    margin:0 0 14px 6px;
+    color:#fff;
+  }
+  table{width:100%;border-collapse:separate;border-spacing:0 14px}
+  thead th{
+    text-align:left;
+    font-size:.85rem;font-weight:500;
+    color:var(--ink-soft);
+    padding:6px 22px;
+  }
+  thead th:last-child{text-align:right}
+  tbody tr{background:var(--card);box-shadow:0 10px 30px -14px rgba(13,27,61,.25);transition:transform .2s,box-shadow .2s}
+  tbody tr:hover{transform:translateY(-2px);box-shadow:0 16px 34px -14px rgba(13,27,61,.35)}
+  tbody td{padding:18px 22px;vertical-align:middle}
+  tbody td:first-child{border-radius:var(--radius) 0 0 var(--radius);width:150px}
+  tbody td:last-child{border-radius:0 var(--radius) var(--radius) 0;width:230px;text-align:right}
+  .thumb{
+    width:112px;height:112px;
+    border-radius:16px;
+    object-fit:cover;display:block;
+    background:var(--line);
+  }
+  .p-name{font-family:var(--display);font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+  .p-desc{color:var(--ink-soft);margin-top:4px;max-width:46ch}
+  .p-tag{
+    display:inline-block;margin-top:10px;
+    font-size:.8rem;font-weight:700;
+    color:#0a7d63;background:#dcf7ef;
+    padding:3px 10px;border-radius:999px;
+  }
+  .pay{
+    font-family:var(--body);font-weight:700;font-size:1rem;
+    color:#fff;background:var(--accent);
+    border:0;border-radius:14px;
+    padding:15px 22px;cursor:pointer;
+    box-shadow:0 8px 18px -8px var(--accent);
+    transition:background .2s,transform .15s;
+  }
+  .pay:hover{background:var(--accent-dark)}
+  .pay:active{transform:scale(.97)}
+
+  /* ---------- Fenêtre de paiement ---------- */
+  .overlay{
+    position:fixed;inset:0;z-index:20;
+    background:rgba(13,27,61,.6);
+    display:none;align-items:center;justify-content:center;
+    padding:18px;
+  }
+  .overlay.open{display:flex}
+  .modal{
+    background:#fff;border-radius:24px;
+    width:100%;max-width:440px;
+    padding:28px;
+    animation:pop .22s ease-out;
+  }
+  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+  .modal h2{font-family:var(--display);font-size:1.4rem}
+  .summary{
+    display:flex;gap:14px;align-items:center;
+    margin:18px 0;padding:14px;
+    background:var(--paper);border-radius:16px;
+  }
+  .summary img{width:64px;height:64px;border-radius:12px;object-fit:cover}
+  .summary strong{display:block}
+  .summary span{color:var(--accent);font-weight:700}
+  .actions{display:grid;gap:10px}
+  .btn{
+    display:block;text-align:center;text-decoration:none;
+    font-weight:700;padding:14px;border-radius:14px;border:0;cursor:pointer;font-size:1rem;font-family:var(--body);
+  }
+  .btn-main{background:#1fa855;color:#fff}
+  .btn-main:hover{background:#188a45}
+  .btn-alt{background:var(--paper);color:var(--ink)}
+  .btn-alt:hover{background:var(--line)}
+  .note{font-size:.85rem;color:var(--ink-soft);margin-top:14px;text-align:center}
+
+  footer{text-align:center;color:var(--ink-soft);font-size:.9rem;padding:0 16px 36px}
+
+  /* ---------- Mobile : chaque ligne devient une carte ---------- */
+  @media (max-width:720px){
+    header::after{width:200px;height:200px;border-width:30px;right:-70px;top:-70px}
+    header::before{display:none}
+    thead{display:none}
+    table,tbody,tr,td{display:block;width:100%}
+    tbody tr{border-radius:var(--radius);margin-bottom:16px;padding:16px}
+    tbody td{padding:6px 0}
+    tbody td:first-child,tbody td:last-child{width:100%;border-radius:0;text-align:left}
+    .thumb{width:100%;height:190px}
+    .pay{width:100%;margin-top:6px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important;animation:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1 class="brand">JP Technologie</h1>
+    <p class="tagline">Des accessoires high-tech de qualité, livrés rapidement.</p>
+    <div class="phones">
+      <a href="tel:+2290195414218">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        +2290195414218
+      </a>
+      <a href="tel:+2290140494232">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        +2290140494232
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h2 class="section-title">Nos articles</h2>
+  <table>
+    <thead>
+      <tr><th>Produit</th><th>Description</th><th>Achat</th></tr>
+    </thead>
+    <tbody id="liste-produits"></tbody>
+  </table>
+</main>
+
+<footer>© <span id="annee"></span> JP Technologie · Tous droits réservés</footer>
+
+<!-- Fenêtre de paiement -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titre">
+  <div class="modal">
+    <h2 id="modal-titre">Finaliser la commande</h2>
+    <div class="summary">
+      <img id="m-img" alt="">
+      <div><strong id="m-nom"></strong><span id="m-prix"></span></div>
+    </div>
+    <div class="actions">
+      <a class="btn btn-main" id="m-whatsapp" target="_blank" rel="noopener">Commander sur WhatsApp</a>
+      <a class="btn btn-alt" href="tel:+2290195414218">Appeler +2290195414218</a>
+      <a class="btn btn-alt" href="tel:+2290140494232">Appeler +2290140494232</a>
+      <button class="btn btn-alt" id="m-fermer" type="button">Annuler</button>
+    </div>
+    <p class="note">Le paiement se fait par Mobile Money après confirmation de votre commande.</p>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   COMMENT AJOUTER UN ARTICLE ?
+   Ajoutez simplement un bloc { ... } dans la liste ci-dessous :
+     nom         : nom du produit
+     description : courte description
+     prix        : prix en FCFA (nombre, sans espace)
+     emoji       : symbole affiché si vous n'avez pas encore de photo
+     couleur     : couleur de fond de l'image par défaut
+     image       : (facultatif) lien ou nom de fichier de votre vraie photo
+                   ex. image: "photos/montre.jpg"
+   ===================================================================== */
+const NUMERO_WHATSAPP = "2290195414218";
+
+const produits = [
+  {
+    nom: "Écouteurs Bluetooth sans fil",
+    description: "Son clair, réduction de bruit et boîtier de charge. Jusqu'à 20 h d'autonomie.",
+    prix: 8000,
+    emoji: "🎧",
+    couleur: "#2d5bff"
+  },
+  {
+    nom: "Montre connectée",
+    description: "Suivi du sport, du sommeil et du rythme cardiaque. Notifications du téléphone sur le poignet.",
+    prix: 15000,
+    emoji: "⌚",
+    couleur: "#12c29b"
+  },
+  {
+    nom: "Batterie externe 20 000 mAh",
+    description: "Rechargez votre téléphone jusqu'à 4 fois. Deux ports USB et charge rapide.",
+    prix: 12000,
+    emoji: "🔋",
+    couleur: "#ff7a45"
+  },
+  {
+    nom: "Enceinte Bluetooth portable",
+    description: "Compacte, puissante et résistante aux éclaboussures. Parfaite pour vos sorties.",
+    prix: 10000,
+    emoji: "🔊",
+    couleur: "#8b5cf6"
+  },
+  {
+    nom: "Clé USB 64 Go",
+    description: "Transférez vos fichiers rapidement. Compatible ordinateur et téléphone.",
+    prix: 2000,
+    emoji: "💾",
+    couleur: "#0ea5e9"
+  }
+];
+
+/* ---------- Code de la page (pas besoin d'y toucher) ---------- */
+const fmt = n => n.toLocaleString("fr-FR").replace(/\u202f|\u00a0/g, " ") + " FCFA";
+
+function imageParDefaut(p){
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+    <rect width="400" height="400" fill="${p.couleur}"/>
+    <circle cx="330" cy="70" r="110" fill="#fff" opacity=".14"/>
+    <circle cx="60" cy="360" r="90" fill="#000" opacity=".12"/>
+    <text x="200" y="240" font-size="150" text-anchor="middle">${p.emoji || "📦"}</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+const srcImage = p => p.image || imageParDefaut(p);
+
+const corps = document.getElementById("liste-produits");
+function afficher(){
+  corps.innerHTML = "";
+  produits.forEach((p, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><img class="thumb" src="${srcImage(p)}" alt="${p.nom}" loading="lazy"></td>
+      <td>
+        <div class="p-name"></div>
+        <p class="p-desc"></p>
+        <span class="p-tag">En stock</span>
+      </td>
+      <td><button class="pay" type="button" data-i="${i}">Payer (${fmt(p.prix)})</button></td>`;
+    tr.querySelector(".p-name").textContent = p.nom;
+    tr.querySelector(".p-desc").textContent = p.description;
+    corps.appendChild(tr);
+  });
+}
+afficher();
+
+/* ---------- Fenêtre de paiement ---------- */
+const overlay = document.getElementById("overlay");
+function ouvrir(p){
+  document.getElementById("m-img").src = srcImage(p);
+  document.getElementById("m-nom").textContent = p.nom;
+  document.getElementById("m-prix").textContent = fmt(p.prix);
+  const msg = `Bonjour JP Technologie, je souhaite commander : ${p.nom} (${fmt(p.prix)}).`;
+  document.getElementById("m-whatsapp").href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  overlay.classList.add("open");
+  document.getElementById("m-fermer").focus();
+}
+const fermer = () => overlay.classList.remove("open");
+
+corps.addEventListener("click", e => {
+  const b = e.target.closest(".pay");
+  if(b) ouvrir(produits[b.dataset.i]);
+});
+document.getElementById("m-fermer").addEventListener("click", fermer);
+overlay.addEventListener("click", e => { if(e.target === overlay) fermer(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") fermer(); });
+
+document.getElementById("annee").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
