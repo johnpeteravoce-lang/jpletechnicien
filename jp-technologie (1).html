@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JP Technologie – Boutique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d1b3d;
+    --ink-soft:#4a5676;
+    --paper:#f2f5fb;
+    --card:#ffffff;
+    --accent:#2d5bff;
+    --accent-dark:#1f43d1;
+    --mint:#12c29b;
+    --line:#e1e7f3;
+    --radius:20px;
+    --display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+    --body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);color:var(--ink);background:var(--paper);line-height:1.55;min-height:100vh}
+  a{color:inherit}
+  button{font-family:var(--body)}
+  :focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+
+  /* ---------- En-tête ---------- */
+  header{
+    background:var(--ink);color:#fff;
+    padding:clamp(28px,5vw,56px) clamp(18px,5vw,64px) clamp(56px,7vw,92px);
+    position:relative;overflow:hidden;
+  }
+  header::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;border:46px solid var(--accent);opacity:.9}
+  header::before{content:"";position:absolute;right:150px;bottom:-60px;width:130px;height:130px;border-radius:50%;background:var(--mint)}
+  .header-inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
+  .brand{font-family:var(--display);font-weight:800;font-size:clamp(2.2rem,6vw,4rem);letter-spacing:-.03em;line-height:1}
+  .brand a{text-decoration:none}
+  .tagline{margin-top:12px;color:#b9c4e3;font-size:1.05rem;max-width:36ch}
+  .phones{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .phones a{
+    display:inline-flex;align-items:center;gap:10px;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+    padding:11px 18px;border-radius:999px;text-decoration:none;font-weight:500;
+    backdrop-filter:blur(4px);transition:background .2s;
+  }
+  .phones a:hover{background:rgba(255,255,255,.2)}
+  .phones svg{width:18px;height:18px;flex:none}
+
+  /* ---------- Structure des pages ---------- */
+  main{max-width:1100px;margin:-40px auto 0;padding:0 clamp(14px,4vw,32px) 60px;position:relative;z-index:2}
+  .page{display:none}
+  .page.active{display:block}
+  .section-title{font-family:var(--display);font-size:1.5rem;font-weight:700;margin:0 0 14px 6px;color:#fff}
+  .sub-title{font-family:var(--display);font-size:1.5rem;font-weight:700;margin:34px 6px 14px;letter-spacing:-.01em}
+  .back{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.3);
+    padding:9px 16px;border-radius:999px;cursor:pointer;font-weight:500;font-size:.95rem;
+    margin:0 0 16px 6px;
+  }
+  .back:hover{background:rgba(255,255,255,.24)}
+
+  /* ---------- Boutons ---------- */
+  .btn-big{
+    display:inline-block;border:0;cursor:pointer;
+    font-weight:700;font-size:1.05rem;color:#fff;background:var(--accent);
+    padding:17px 28px;border-radius:16px;
+    box-shadow:0 10px 22px -10px var(--accent);
+    transition:background .2s,transform .15s;
+  }
+  .btn-big:hover{background:var(--accent-dark)}
+  .btn-big:active{transform:scale(.98)}
+  .btn-mint{background:var(--mint);box-shadow:0 10px 22px -10px var(--mint);color:#06382d}
+  .btn-mint:hover{background:#0fa985}
+
+  .banner{
+    background:var(--card);border-radius:var(--radius);
+    padding:22px 24px;margin-bottom:8px;
+    display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;
+    box-shadow:0 10px 30px -14px rgba(13,27,61,.25);
+  }
+  .banner strong{font-family:var(--display);font-size:1.2rem;display:block}
+  .banner span{color:var(--ink-soft)}
+
+  /* ---------- Tableau d'accueil ---------- */
+  table{width:100%;border-collapse:separate;border-spacing:0 14px}
+  thead th{text-align:left;font-size:.85rem;font-weight:500;color:var(--ink-soft);padding:6px 22px}
+  thead th:last-child{text-align:right}
+  tbody tr{background:var(--card);box-shadow:0 10px 30px -14px rgba(13,27,61,.25);transition:transform .2s,box-shadow .2s}
+  tbody tr:hover{transform:translateY(-2px);box-shadow:0 16px 34px -14px rgba(13,27,61,.35)}
+  tbody td{padding:18px 22px;vertical-align:middle}
+  tbody td:first-child{border-radius:var(--radius) 0 0 var(--radius);width:150px}
+  tbody td:last-child{border-radius:0 var(--radius) var(--radius) 0;width:230px;text-align:right}
+  .thumb{width:112px;height:112px;border-radius:16px;object-fit:cover;display:block;background:var(--line)}
+  .p-name{font-family:var(--display);font-size:1.25rem;font-weight:700;letter-spacing:-.01em}
+  .p-desc{color:var(--ink-soft);margin-top:4px;max-width:46ch}
+  .p-tag{display:inline-block;margin-top:10px;font-size:.8rem;font-weight:700;color:#0a7d63;background:#dcf7ef;padding:3px 10px;border-radius:999px}
+  .pay{
+    font-weight:700;font-size:1rem;color:#fff;background:var(--accent);
+    border:0;border-radius:14px;padding:15px 22px;cursor:pointer;
+    box-shadow:0 8px 18px -8px var(--accent);transition:background .2s,transform .15s;
+  }
+  .pay:hover{background:var(--accent-dark)}
+  .pay:active{transform:scale(.97)}
+
+  /* ---------- Catalogue détaillé ---------- */
+  .detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .detail{
+    background:var(--card);border-radius:var(--radius);padding:18px;
+    display:flex;gap:16px;
+    box-shadow:0 10px 30px -14px rgba(13,27,61,.25);
+  }
+  .detail img{width:92px;height:92px;border-radius:14px;flex:none;object-fit:cover}
+  .detail h4{font-family:var(--display);font-size:1.1rem;line-height:1.25}
+  .detail p{color:var(--ink-soft);font-size:.93rem;margin:4px 0 8px}
+  .price-tag{font-weight:700;color:var(--accent)}
+  .price-tag small{font-weight:500;color:var(--ink-soft)}
+  .cta-bottom{text-align:center;margin-top:44px}
+  .price-note{color:var(--ink-soft);font-size:.9rem;margin:0 6px}
+
+  /* ---------- Page « Commander » ---------- */
+  .choice{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:6px}
+  .choice button{
+    border:0;cursor:pointer;text-align:left;color:#fff;
+    padding:46px 30px;border-radius:24px;
+    font-family:var(--display);font-weight:800;font-size:1.7rem;letter-spacing:-.02em;line-height:1.15;
+    box-shadow:0 18px 34px -16px rgba(13,27,61,.5);transition:transform .2s;
+  }
+  .choice button:hover{transform:translateY(-3px)}
+  .choice .c-gsm{background:var(--accent)}
+  .choice .c-info{background:var(--ink)}
+
+  /* ---------- Listes d'achat (image · prix · payer) ---------- */
+  .buy-list{display:grid;gap:14px}
+  .buy-row{
+    background:var(--card);border-radius:var(--radius);padding:16px 22px 16px 16px;
+    display:grid;grid-template-columns:150px 1fr auto;gap:20px;align-items:center;
+    box-shadow:0 10px 30px -14px rgba(13,27,61,.25);
+  }
+  .buy-row img{width:150px;height:130px;border-radius:16px;object-fit:cover;display:block}
+  .buy-price{font-family:var(--display);font-size:1.5rem;font-weight:800;letter-spacing:-.01em}
+  .buy-price small{display:block;font-family:var(--body);font-size:.85rem;font-weight:500;color:var(--ink-soft);letter-spacing:0}
+
+  /* ---------- Interface de paiement ---------- */
+  .overlay{position:fixed;inset:0;z-index:20;background:rgba(13,27,61,.6);display:none;align-items:center;justify-content:center;padding:16px}
+  .overlay.open{display:flex}
+  .modal{background:#fff;border-radius:24px;width:100%;max-width:470px;max-height:94vh;overflow:auto;padding:26px;animation:pop .22s ease-out}
+  @keyframes pop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+  .modal h2{font-family:var(--display);font-size:1.4rem}
+  .summary{display:flex;gap:14px;align-items:center;margin:16px 0;padding:12px;background:var(--paper);border-radius:16px}
+  .summary img{width:60px;height:60px;border-radius:12px;object-fit:cover}
+  .summary strong{display:block;line-height:1.3}
+  .summary span{color:var(--accent);font-weight:700}
+  .methods-title{font-weight:700;margin-bottom:8px}
+  .methods{list-style:none;display:grid;gap:8px}
+  .methods li{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:14px;padding:10px 12px;font-weight:500}
+  .badge{width:38px;height:38px;border-radius:10px;flex:none;display:grid;place-items:center;font-weight:800;font-size:.8rem;color:#fff}
+  .b-mtn{background:#ffc400;color:#3a2e00}
+  .b-moov{background:#0a6bd6}
+  .b-celtiis{background:#e8472b}
+  .b-card{background:var(--ink)}
+  .b-cash{background:var(--mint);color:#06382d}
+  .wa-box{margin-top:18px;background:#e9f9ef;border-radius:16px;padding:16px;text-align:center}
+  .wa-box a{color:#13803d;font-weight:700;text-decoration:underline;white-space:nowrap}
+  .wa-btn{display:block;margin-top:12px;background:#1fa855;color:#fff;text-decoration:none;font-weight:700;padding:13px;border-radius:12px}
+  .wa-btn:hover{background:#188a45}
+  .close-btn{display:block;width:100%;margin-top:12px;padding:12px;border:0;border-radius:12px;background:var(--paper);font-weight:700;cursor:pointer;font-size:1rem}
+  .close-btn:hover{background:var(--line)}
+
+  footer{text-align:center;color:var(--ink-soft);font-size:.9rem;padding:0 16px 36px}
+
+  /* ---------- Mobile ---------- */
+  @media (max-width:720px){
+    header::after{width:200px;height:200px;border-width:30px;right:-70px;top:-70px}
+    header::before{display:none}
+    .home-table thead{display:none}
+    .home-table,.home-table tbody,.home-table tr,.home-table td{display:block;width:100%}
+    .home-table tbody tr{border-radius:var(--radius);margin-bottom:16px;padding:16px}
+    .home-table tbody td{padding:6px 0}
+    .home-table tbody td:first-child,.home-table tbody td:last-child{width:100%;border-radius:0;text-align:left}
+    .home-table .thumb{width:100%;height:190px}
+    .home-table .pay{width:100%;margin-top:6px}
+    .buy-row{grid-template-columns:96px 1fr;gap:12px 14px;padding:14px}
+    .buy-row img{width:96px;height:96px}
+    .buy-row .pay{grid-column:1 / -1;width:100%}
+    .buy-price{font-size:1.25rem}
+    .choice button{padding:34px 24px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1 class="brand"><a href="#accueil">JP Technologie</a></h1>
+    <p class="tagline">Des accessoires high-tech de qualité, livrés rapidement.</p>
+    <div class="phones">
+      <a href="tel:+2290195414218">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        +2290195414218
+      </a>
+      <a href="tel:+2290140494232">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+        +2290140494232
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- PAGE 1 : Accueil -->
+  <section class="page" id="accueil">
+    <h2 class="section-title">Nos articles</h2>
+    <div class="banner">
+      <div>
+        <strong>Plus de choix en boutique</strong>
+        <span>Découvrez tous nos accessoires avec leurs prix.</span>
+      </div>
+      <button class="btn-big" data-go="catalogue" type="button">Accessoires GSM et Informatique</button>
+    </div>
+    <table class="home-table">
+      <thead><tr><th>Produit</th><th>Description</th><th>Achat</th></tr></thead>
+      <tbody id="liste-produits"></tbody>
+    </table>
+  </section>
+
+  <!-- PAGE 2 : Catalogue détaillé -->
+  <section class="page" id="catalogue">
+    <button class="back" data-go="accueil" type="button">← Retour</button>
+    <h2 class="section-title">Accessoires GSM et Informatique</h2>
+    <h3 class="sub-title">Accessoires GSM</h3>
+    <p class="price-note">Les prix indiqués sont des prix probables et peuvent varier selon la disponibilité.</p>
+    <div class="detail-grid" id="detail-gsm" style="margin-top:14px"></div>
+    <h3 class="sub-title">Accessoires Informatique</h3>
+    <div class="detail-grid" id="detail-info"></div>
+    <div class="cta-bottom">
+      <button class="btn-big btn-mint" data-go="commander" type="button">Commander un accessoire</button>
+    </div>
+  </section>
+
+  <!-- PAGE 3 : Choix de la catégorie -->
+  <section class="page" id="commander">
+    <button class="back" data-go="catalogue" type="button">← Retour</button>
+    <h2 class="section-title">Commander un accessoire</h2>
+    <div class="choice">
+      <button class="c-gsm" data-go="gsm" type="button">Accessoires GSM</button>
+      <button class="c-info" data-go="info" type="button">Accessoires Informatique</button>
+    </div>
+  </section>
+
+  <!-- PAGE 4 : Liste GSM -->
+  <section class="page" id="gsm">
+    <button class="back" data-go="commander" type="button">← Retour</button>
+    <h2 class="section-title">Accessoires GSM</h2>
+    <div class="buy-list" id="achat-gsm"></div>
+  </section>
+
+  <!-- PAGE 5 : Liste Informatique -->
+  <section class="page" id="info">
+    <button class="back" data-go="commander" type="button">← Retour</button>
+    <h2 class="section-title">Accessoires Informatique</h2>
+    <div class="buy-list" id="achat-info"></div>
+  </section>
+
+</main>
+
+<footer>© <span id="annee"></span> JP Technologie · Tous droits réservés</footer>
+
+<!-- Interface de paiement -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titre">
+  <div class="modal">
+    <h2 id="modal-titre">Paiement</h2>
+    <div class="summary">
+      <img id="m-img" alt="">
+      <div><strong id="m-nom"></strong><span id="m-prix"></span></div>
+    </div>
+    <p class="methods-title">Moyens de paiement</p>
+    <ul class="methods">
+      <li><span class="badge b-mtn">MTN</span> MTN Mobile Money</li>
+      <li><span class="badge b-moov">Moov</span> Moov Money</li>
+      <li><span class="badge b-celtiis">Cel</span> Celtiis Cash</li>
+      <li><span class="badge b-card">💳</span> Carte bancaire (Visa / Mastercard)</li>
+      <li><span class="badge b-cash">FCFA</span> Espèces à la livraison</li>
+    </ul>
+    <div class="wa-box">
+      Contacter nous directement sur WhatsApp au
+      <a id="m-wa-num" href="#" target="_blank" rel="noopener">+2290140494232</a>
+      <a class="wa-btn" id="m-wa-btn" href="#" target="_blank" rel="noopener">Ouvrir WhatsApp</a>
+    </div>
+    <button class="close-btn" id="m-fermer" type="button">Fermer</button>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   COMMENT AJOUTER UN ARTICLE ?
+   Ajoutez un bloc { ... } dans l'une des trois listes ci-dessous
+   (produits, gsm ou informatique) :
+     nom         : nom du produit
+     description : description (détails affichés dans le catalogue)
+     prix        : prix en FCFA (nombre, sans espace)
+     emoji       : symbole affiché si vous n'avez pas encore de photo
+     couleur     : couleur de fond de l'image par défaut
+     image       : (facultatif) lien ou fichier de votre vraie photo
+                   ex. image: "photos/montre.jpg"
+   ===================================================================== */
+const NUMERO_WHATSAPP = "2290140494232";
+
+/* Articles de la page d'accueil */
+const produits = [
+  { nom:"Écouteurs Bluetooth sans fil", description:"Son clair, réduction de bruit et boîtier de charge. Jusqu'à 20 h d'autonomie.", prix:8000, emoji:"🎧", couleur:"#2d5bff" },
+  { nom:"Montre connectée", description:"Suivi du sport, du sommeil et du rythme cardiaque. Notifications du téléphone sur le poignet.", prix:15000, emoji:"⌚", couleur:"#12c29b" },
+  { nom:"Batterie externe 20 000 mAh", description:"Rechargez votre téléphone jusqu'à 4 fois. Deux ports USB et charge rapide.", prix:12000, emoji:"🔋", couleur:"#ff7a45" },
+  { nom:"Enceinte Bluetooth portable", description:"Compacte, puissante et résistante aux éclaboussures. Parfaite pour vos sorties.", prix:10000, emoji:"🔊", couleur:"#8b5cf6" },
+  { nom:"Clé USB 64 Go", description:"Transférez vos fichiers rapidement. Compatible ordinateur et téléphone.", prix:2000, emoji:"💾", couleur:"#0ea5e9" }
+];
+
+/* Accessoires GSM (prix probables) */
+const gsm = [
+  { nom:"Chargeur rapide 20 W", description:"Prise secteur à charge rapide, compatible Android et iPhone (avec câble adapté). Protection contre la surchauffe.", prix:3500, emoji:"🔌", couleur:"#2d5bff" },
+  { nom:"Câble USB-C renforcé 1 m", description:"Câble tressé résistant pour charger et transférer des données. Compatible avec la plupart des smartphones Android.", prix:1500, emoji:"🔗", couleur:"#0ea5e9" },
+  { nom:"Câble iPhone Lightning 1 m", description:"Charge et synchronisation pour iPhone et iPad. Gaine solide anti-torsion.", prix:2500, emoji:"📱", couleur:"#64748b" },
+  { nom:"Écouteurs filaires avec micro", description:"Son stéréo, micro intégré et bouton de réponse aux appels. Prise jack 3,5 mm.", prix:1500, emoji:"🎧", couleur:"#12c29b" },
+  { nom:"Écouteurs Bluetooth", description:"Sans fil, appairage rapide, boîtier de charge et environ 15 h d'autonomie au total.", prix:8000, emoji:"🎵", couleur:"#8b5cf6" },
+  { nom:"Coque de protection", description:"Coque antichoc en silicone ou rigide, disponible pour la plupart des modèles. Précisez votre modèle à la commande.", prix:2000, emoji:"🛡️", couleur:"#ff7a45" },
+  { nom:"Verre trempé", description:"Protège l'écran contre les rayures et les chocs. Pose facile, dureté 9H.", prix:1000, emoji:"🪟", couleur:"#14b8a6" },
+  { nom:"Batterie externe 10 000 mAh", description:"Compacte, avec deux sorties USB et indicateur de charge. Recharge un téléphone environ 2 fois.", prix:7000, emoji:"🔋", couleur:"#ef4444" },
+  { nom:"Support téléphone pour voiture", description:"Fixation solide sur la grille d'aération, orientable à 360°. Convient aux téléphones de 4 à 7 pouces.", prix:2500, emoji:"🚗", couleur:"#334155" },
+  { nom:"Carte mémoire 64 Go", description:"Carte microSD classe 10 avec adaptateur. Idéale pour photos, vidéos et applications.", prix:4000, emoji:"💽", couleur:"#f59e0b" }
+];
+
+/* Accessoires Informatique (prix probables) */
+const informatique = [
+  { nom:"Souris sans fil", description:"Souris optique 2,4 GHz avec récepteur USB. Silencieuse et précise, une pile incluse.", prix:3500, emoji:"🖱️", couleur:"#2d5bff" },
+  { nom:"Clavier USB", description:"Clavier complet avec pavé numérique, touches souples et silencieuses. Branchement direct, sans installation.", prix:5000, emoji:"⌨️", couleur:"#334155" },
+  { nom:"Clé USB 32 Go", description:"Stockage rapide et pratique pour vos documents, photos et logiciels.", prix:3000, emoji:"💾", couleur:"#0ea5e9" },
+  { nom:"Disque dur externe 1 To", description:"Sauvegardez tous vos fichiers. Connexion USB 3.0, compatible Windows et Mac.", prix:35000, emoji:"🗄️", couleur:"#8b5cf6" },
+  { nom:"Sac à dos pour ordinateur portable", description:"Compartiment rembourré pour PC jusqu'à 15,6 pouces, plusieurs poches et bretelles confortables.", prix:10000, emoji:"🎒", couleur:"#12c29b" },
+  { nom:"Refroidisseur pour PC portable", description:"Support avec ventilateurs pour garder votre ordinateur au frais et améliorer son confort d'utilisation.", prix:8000, emoji:"❄️", couleur:"#14b8a6" },
+  { nom:"Hub USB 4 ports", description:"Ajoutez 4 ports USB à votre ordinateur. Léger et facile à transporter.", prix:4000, emoji:"🔀", couleur:"#f59e0b" },
+  { nom:"Chargeur PC portable universel", description:"Livré avec plusieurs embouts pour s'adapter à la plupart des marques d'ordinateurs.", prix:12000, emoji:"⚡", couleur:"#ef4444" },
+  { nom:"Webcam HD avec micro", description:"Image nette en 720p, micro intégré. Pratique pour les cours en ligne et les réunions vidéo.", prix:9000, emoji:"📷", couleur:"#ff7a45" },
+  { nom:"Câble HDMI 1,5 m", description:"Reliez votre ordinateur ou téléphone à une télévision ou un vidéoprojecteur en haute définition.", prix:3000, emoji:"📺", couleur:"#64748b" }
+];
+
+/* ---------- Code de la page (pas besoin d'y toucher) ---------- */
+const fmt = n => n.toLocaleString("fr-FR").replace(/[\u202f\u00a0]/g, " ") + " FCFA";
+
+function imageParDefaut(p){
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+    <rect width="400" height="400" fill="${p.couleur}"/>
+    <circle cx="330" cy="70" r="110" fill="#fff" opacity=".14"/>
+    <circle cx="60" cy="360" r="90" fill="#000" opacity=".12"/>
+    <text x="200" y="240" font-size="150" text-anchor="middle">${p.emoji || "📦"}</text>
+  </svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+const srcImage = p => p.image || imageParDefaut(p);
+
+/* Page d'accueil : tableau */
+const corps = document.getElementById("liste-produits");
+produits.forEach((p, i) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><img class="thumb" src="${srcImage(p)}" alt="" loading="lazy"></td>
+    <td><div class="p-name"></div><p class="p-desc"></p><span class="p-tag">En stock</span></td>
+    <td><button class="pay" type="button">Payer (${fmt(p.prix)})</button></td>`;
+  tr.querySelector(".thumb").alt = p.nom;
+  tr.querySelector(".p-name").textContent = p.nom;
+  tr.querySelector(".p-desc").textContent = p.description;
+  tr.querySelector(".pay").addEventListener("click", () => ouvrirPaiement(p));
+  corps.appendChild(tr);
+});
+
+/* Catalogue détaillé */
+function remplirDetails(id, liste){
+  const conteneur = document.getElementById(id);
+  liste.forEach(p => {
+    const d = document.createElement("article");
+    d.className = "detail";
+    d.innerHTML = `<img src="${srcImage(p)}" alt="" loading="lazy"><div><h4></h4><p></p><div class="price-tag"><small>Prix probable : </small>≈ ${fmt(p.prix)}</div></div>`;
+    d.querySelector("img").alt = p.nom;
+    d.querySelector("h4").textContent = p.nom;
+    d.querySelector("p").textContent = p.description;
+    conteneur.appendChild(d);
+  });
+}
+remplirDetails("detail-gsm", gsm);
+remplirDetails("detail-info", informatique);
+
+/* Listes d'achat : image · prix · Payer */
+function remplirAchats(id, liste){
+  const conteneur = document.getElementById(id);
+  liste.forEach(p => {
+    const r = document.createElement("div");
+    r.className = "buy-row";
+    r.innerHTML = `<img src="${srcImage(p)}" alt="" loading="lazy"><div class="buy-price">${fmt(p.prix)}<small></small></div><button class="pay" type="button">Payer</button>`;
+    r.querySelector("img").alt = p.nom;
+    r.querySelector("small").textContent = p.nom;
+    r.querySelector(".pay").addEventListener("click", () => ouvrirPaiement(p));
+    conteneur.appendChild(r);
+  });
+}
+remplirAchats("achat-gsm", gsm);
+remplirAchats("achat-info", informatique);
+
+/* ---------- Navigation entre les pages ---------- */
+const pages = ["accueil","catalogue","commander","gsm","info"];
+function afficherPage(){
+  let nom = location.hash.replace("#","");
+  if(!pages.includes(nom)) nom = "accueil";
+  pages.forEach(p => document.getElementById(p).classList.toggle("active", p === nom));
+  window.scrollTo(0,0);
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-go]");
+  if(b) location.hash = b.dataset.go;
+});
+window.addEventListener("hashchange", afficherPage);
+afficherPage();
+
+/* ---------- Interface de paiement ---------- */
+const overlay = document.getElementById("overlay");
+function ouvrirPaiement(p){
+  document.getElementById("m-img").src = srcImage(p);
+  document.getElementById("m-nom").textContent = p.nom;
+  document.getElementById("m-prix").textContent = fmt(p.prix);
+  const msg = `Bonjour JP Technologie, je souhaite payer : ${p.nom} (${fmt(p.prix)}).`;
+  const lien = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  document.getElementById("m-wa-num").href = lien;
+  document.getElementById("m-wa-btn").href = lien;
+  overlay.classList.add("open");
+  document.getElementById("m-fermer").focus();
+}
+const fermer = () => overlay.classList.remove("open");
+document.getElementById("m-fermer").addEventListener("click", fermer);
+overlay.addEventListener("click", e => { if(e.target === overlay) fermer(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") fermer(); });
+
+document.getElementById("annee").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
