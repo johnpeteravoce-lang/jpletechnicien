@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JPLE Technicien – Connexion</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="brand">JPLE <b>Technicien</b></div>
+  <div class="card">
+    <div class="tabs" id="tabs">
+      <button class="on" data-tab="login">Connexion</button>
+      <button data-tab="signup">Inscription</button>
+    </div>
+
+    <form id="login">
+      <label for="le">Email</label><input id="le" type="email" required autocomplete="email">
+      <label for="lp">Mot de passe</label><input id="lp" type="password" required autocomplete="current-password">
+      <button class="btn" type="submit">Se connecter</button>
+      <button class="link" type="button" id="toForgot">Mot de passe oublié ?</button>
+    </form>
+
+    <form id="signup" hidden>
+      <label for="sn">Nom complet</label><input id="sn" required autocomplete="name">
+      <label for="se">Email</label><input id="se" type="email" required autocomplete="email">
+      <label for="sp">Mot de passe (8 caractères minimum)</label><input id="sp" type="password" minlength="8" required autocomplete="new-password">
+      <button class="btn" type="submit">Créer mon compte</button>
+    </form>
+
+    <form id="forgot" hidden>
+      <p>Entrez votre email : nous vous envoyons un lien pour choisir un nouveau mot de passe.</p>
+      <label for="fe">Email</label><input id="fe" type="email" required autocomplete="email">
+      <button class="btn" type="submit">Envoyer le lien</button>
+      <button class="link" type="button" id="toLogin">Retour à la connexion</button>
+    </form>
+
+    <div id="msg" class="msg" hidden></div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
