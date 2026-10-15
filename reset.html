@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nouveau mot de passe</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main class="wrap">
+  <div class="brand">JPLE <b>Technicien</b></div>
+  <div class="card">
+    <h2>Nouveau mot de passe</h2>
+    <form id="form" hidden>
+      <label for="p1">Nouveau mot de passe (8 caractères minimum)</label>
+      <input id="p1" type="password" minlength="8" required autocomplete="new-password">
+      <label for="p2">Confirmer</label>
+      <input id="p2" type="password" minlength="8" required autocomplete="new-password">
+      <button class="btn" type="submit">Enregistrer</button>
+    </form>
+    <p id="wait">Vérification du lien…</p>
+    <div id="msg" class="msg" hidden></div>
+    <p><a href="index.html">Retour à la connexion</a></p>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script>
+const msg = document.getElementById("msg"), form = document.getElementById("form"), wait = document.getElementById("wait");
+function ready() { wait.hidden = true; form.hidden = false; }
+// Le lien de l'email ouvre une session temporaire de récupération
+sb.auth.onAuthStateChange((ev) => { if (ev === "PASSWORD_RECOVERY") ready(); });
+setTimeout(async () => {
+  if (form.hidden) {
+    const { data } = await sb.auth.getSession();
+    if (data.session) ready();
+    else { wait.hidden = true; showMsg(msg, "Lien invalide ou expiré. Refaites une demande depuis la page de connexion.", "error"); }
+  }
+}, 1500);
+form.onsubmit = async (e) => {
+  e.preventDefault();
+  if (p1.value !== p2.value) return showMsg(msg, "Les mots de passe ne correspondent pas.", "error");
+  const { error } = await sb.auth.updateUser({ password: p1.value });
+  if (error) return showMsg(msg, error.message, "error");
+  showMsg(msg, "Mot de passe modifié. Redirection…", "ok");
+  setTimeout(() => location.replace("dashboard.html"), 1500);
+};
+</script>
+</body>
+</html>
